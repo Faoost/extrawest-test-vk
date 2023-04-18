@@ -6,6 +6,7 @@ import { BooksModule } from './books/books.module';
 import { PublishersModule } from './publishers/publishers.module';
 import { AuthorsModule } from './authors/authors.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       subscribers: [],
       migrations: [],
     }),
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
