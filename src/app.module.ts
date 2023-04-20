@@ -7,6 +7,7 @@ import { PublishersModule } from './publishers/publishers.module';
 import { AuthorsModule } from './authors/authors.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthModule } from './auth/auth.module';
+import Author from './authors/entities/author.entity';
 
 @Module({
   imports: [
@@ -25,9 +26,9 @@ import { AuthModule } from './auth/auth.module';
       database: process.env.DB_DATABASE,
       synchronize: true,
       logging: true,
-      entities: [],
-      subscribers: [],
-      migrations: [],
+      entities: [Author],
+      autoLoadEntities: true,
+      migrationsTableName: 'migrations',
     }),
     AuthModule,
   ],
