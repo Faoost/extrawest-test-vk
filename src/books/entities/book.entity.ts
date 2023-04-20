@@ -2,6 +2,7 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
   ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
@@ -11,27 +12,34 @@ import Author from '../../authors/entities/author.entity';
 
 @Entity('book')
 export default class Book {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn('identity', {
+    generatedIdentity: 'ALWAYS',
+  })
   id: number;
 
-  @Column()
+  @Column({ name: 'name' })
   name: string;
 
-  @ManyToOne(() => Publisher, (publisher) => publisher.id)
+  @ManyToOne(() => Publisher, (publisher) => publisher.id, { nullable: true })
+  @JoinColumn({ name: 'publisher_id' })
   publisherId: Publisher;
 
   @ManyToOne(() => Author, (autrhor) => autrhor.id)
+  @JoinColumn({ name: 'author_id' })
   authorId: Author;
 
-  @Column()
+  @Column({
+    name: 'isbn_code',
+    nullable: true,
+  })
   isbnCode: string;
 
-  @Column()
+  @Column({ name: 'pages' })
   pages: number;
 
-  @CreateDateColumn()
+  @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;
 
-  @UpdateDateColumn()
+  @UpdateDateColumn({ name: 'updated_at' })
   updatedAt: Date;
 }

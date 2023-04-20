@@ -11,15 +11,18 @@ export default class Publisher {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({ name: 'name' })
   name: string;
 
-  @Column()
+  @Column({
+    name: 'site_link',
+    nullable: true,
+  })
   siteLink: string;
 
-  @CreateDateColumn()
+  @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;
 
-  @UpdateDateColumn()
+  @UpdateDateColumn({ name: 'updated_at' })
   updatedAt: Date;
 }
