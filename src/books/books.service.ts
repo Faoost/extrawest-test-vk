@@ -74,11 +74,22 @@ export class BooksService {
   }
 
   findAll(): Promise<Book[]> {
-    return this.booksRepository.find();
+    return this.booksRepository.find({
+      relations: {
+        publisherId: true,
+        authorId: true,
+      },
+    });
   }
 
   findOne(id: number): Promise<Book | null> {
-    return this.booksRepository.findOneBy({ id });
+    return this.booksRepository.findOne({
+      where: { id },
+      relations: {
+        publisherId: true,
+        authorId: true,
+      },
+    });
   }
 
   async update(id: number, book: UpdateBookDto) {
@@ -107,8 +118,16 @@ export class BooksService {
     );
   }
 
-  remove(id: number) {
-    return this.booksRepository.delete({ id });
+  async remove(id: number) {
+    const book = await this.booksRepository.findOneBy({ id });
+
+    if (!book)
+      throw new HttpException(
+        `Cant find book with id - '${id}'`,
+        HttpStatus.BAD_REQUEST,
+      );
+
+    return this.booksRepository.remove(book);
   }
 
   async validatePublisher(id: number): Promise<Publisher> {
