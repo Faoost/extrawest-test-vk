@@ -10,6 +10,7 @@ import { Init1681971630237 } from '../migrations/1681971630237-Init';
 import { InitAuthors1681978397829 } from '../migrations/1681978397829-init-authors';
 import { InitPublishers1681980913891 } from '../migrations/1681980913891-init-publishers';
 import { InitBooks1681989344108 } from '../migrations/1681989344108-init-books';
+import { MakeIsbnCodeUnique1682002172607 } from '../migrations/1682002172607-make-isbn-code-unique';
 
 const { DB_USERNAME, DB_PASSWORD, DB_DATABASE } = process.env;
 
@@ -28,6 +29,7 @@ export default new DataSource({
     InitAuthors1681978397829,
     InitPublishers1681980913891,
     InitBooks1681989344108,
+    MakeIsbnCodeUnique1682002172607,
   ],
   migrationsTableName: 'migrations',
 });
