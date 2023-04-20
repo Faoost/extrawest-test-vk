@@ -1,10 +1,11 @@
 import { Module } from '@nestjs/common';
 import { PublishersService } from './publishers.service';
 import { PublishersController } from './publishers.controller';
-import { AuthModule } from 'src/auth/auth.module';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import Publisher from './entities/publisher.entity';
 
 @Module({
-  imports: [AuthModule],
+  imports: [TypeOrmModule.forFeature([Publisher])],
   controllers: [PublishersController],
   providers: [PublishersService],
 })

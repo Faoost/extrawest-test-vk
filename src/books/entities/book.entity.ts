@@ -31,6 +31,7 @@ export default class Book {
   @Column({
     name: 'isbn_code',
     nullable: true,
+    unique: true,
   })
   isbnCode: string;
 
