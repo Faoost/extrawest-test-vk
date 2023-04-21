@@ -7,7 +7,7 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiExtraModels, ApiTags } from '@nestjs/swagger';
-import { PublishersService } from './publishers.service';
+import { PublisherService } from './publisher.service';
 import { JWTAuthGuard } from '../guards/jwt-auth.guard';
 import Publisher from './entities/publisher.entity';
 import {
@@ -20,13 +20,13 @@ import {
 @Controller('publishers')
 @ApiExtraModels(Publisher)
 export class PublishersController {
-  constructor(private readonly publishersService: PublishersService) {}
+  constructor(private readonly publisherService: PublisherService) {}
 
   @Get()
   @PublishersFindAllDecorator()
   @UseGuards(JWTAuthGuard)
   findAll() {
-    return this.publishersService.findAll();
+    return this.publisherService.findAll();
   }
 
   @Get(':id')
@@ -38,6 +38,6 @@ export class PublishersController {
         `id - '${id}' is Not a Number`,
         HttpStatus.BAD_REQUEST,
       );
-    return this.publishersService.findOne(+id);
+    return this.publisherService.findOne(+id);
   }
 }

@@ -1,12 +1,9 @@
 import { Module } from '@nestjs/common';
-import { PublishersService } from './publishers.service';
 import { PublishersController } from './publishers.controller';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import Publisher from './entities/publisher.entity';
+import { BookPublishersInfrustructureModule } from '../publishers/book-publishers/book-publishers-infrustructure.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Publisher])],
+  imports: [BookPublishersInfrustructureModule],
   controllers: [PublishersController],
-  providers: [PublishersService],
 })
 export class PublishersModule {}

@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
-import Publisher from './entities/publisher.entity';
+import Publisher from '../entities/publisher.entity';
 
 @Injectable()
-export class PublishersService {
+export class BookPublishersService {
   constructor(
     @InjectRepository(Publisher)
     private publishersRepository: Repository<Publisher>,
