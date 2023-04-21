@@ -66,16 +66,9 @@ export class BookSubscriber implements EntitySubscriberInterface<Book> {
 
   async beforeRemove(event: RemoveEvent<Book>) {
     const log = event.manager.create(BookLogs);
-    const book = await event.manager.findOne(Book, {
-      where: { isbnCode: event.entity.isbnCode },
-      relations: {
-        publisherId: true,
-        authorId: true,
-      },
-    });
 
     log.action = BookLogTypeEnum.DELETE;
-    log.entity = JSON.parse(JSON.stringify(book));
+    log.entity = JSON.parse(JSON.stringify(event.entity));
 
     await event.manager.save(log);
   }

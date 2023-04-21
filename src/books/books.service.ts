@@ -1,4 +1,9 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  HttpException,
+  HttpStatus,
+  Injectable,
+} from '@nestjs/common';
 import { CreateBookDto } from './dto/create-book.dto';
 import { CreateBookBulk } from './dto/create-book-bulk.dto';
 import { UpdateBookDto } from './dto/update-book.dto';
@@ -22,6 +27,7 @@ export class BooksService {
   async create(book: CreateBookDto): Promise<Book> {
     let publisher: Publisher | null = null;
     let author: Author;
+    let createdBook: Book;
 
     try {
       if (book.publisherId) {
@@ -33,13 +39,20 @@ export class BooksService {
       throw error;
     }
 
-    return this.booksRepository.save({
-      name: book.name,
-      authorId: author,
-      publisherId: publisher,
-      isbnCode: book.isbnCode,
-      pages: book.pages,
-    });
+    try {
+      createdBook = await this.booksRepository.save({
+        name: book.name,
+        authorId: author,
+        publisherId: publisher,
+        isbnCode: book.isbnCode,
+        pages: book.pages,
+      });
+    } catch (error) {
+      throw new BadRequestException({
+        cause: error,
+      });
+    }
+    return createdBook;
   }
 
   async createBulk(body: CreateBookBulk) {
@@ -119,7 +132,13 @@ export class BooksService {
   }
 
   async remove(id: number) {
-    const book = await this.booksRepository.findOneBy({ id });
+    const book = await this.booksRepository.findOne({
+      where: { id },
+      relations: {
+        publisherId: true,
+        authorId: true,
+      },
+    });
 
     if (!book)
       throw new HttpException(
@@ -130,7 +149,7 @@ export class BooksService {
     return this.booksRepository.remove(book);
   }
 
-  async validatePublisher(id: number): Promise<Publisher> {
+  private async validatePublisher(id: number): Promise<Publisher> {
     const publisher = await this.publishersRepository.findOneBy({
       id,
     });
@@ -144,7 +163,7 @@ export class BooksService {
     return publisher;
   }
 
-  async validateAuthor(id: number): Promise<Author> {
+  private async validateAuthor(id: number): Promise<Author> {
     const author = await this.authorsRepository.findOneBy({
       id,
     });
