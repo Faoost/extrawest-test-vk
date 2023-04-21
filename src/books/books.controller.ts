@@ -20,7 +20,7 @@ import {
   BookDeleteByIdDecorator,
 } from './books.controller.decorator';
 
-import { BooksService } from './books.service';
+import { BookService } from './book.service';
 
 import { CreateBookDto } from './dto/create-book.dto';
 import { CreateBookBulk } from './dto/create-book-bulk.dto';
@@ -35,27 +35,27 @@ import Book from './entities/book.entity';
 @Controller('books')
 @ApiExtraModels(Book)
 export class BooksController {
-  constructor(private readonly booksService: BooksService) {}
+  constructor(private readonly bookService: BookService) {}
 
   @Post()
   @BookCreateDecorator()
   @UseGuards(JWTAuthGuard)
   create(@Body() createBookDto: CreateBookDto) {
-    return this.booksService.create(createBookDto);
+    return this.bookService.create(createBookDto);
   }
 
   @Post('/bulk')
   @BookCreateBulkDecorator()
   @UseGuards(JWTAuthGuard)
   createBulk(@Body() createBookDto: CreateBookBulk) {
-    return this.booksService.createBulk(createBookDto);
+    return this.bookService.createBulk(createBookDto);
   }
 
   @Get()
   @BookFindAllDecorator()
   @UseGuards(JWTAuthGuard)
   findAll() {
-    return this.booksService.findAll();
+    return this.bookService.findAll();
   }
 
   @Get(':id')
@@ -67,7 +67,7 @@ export class BooksController {
         `id - '${id}' is Not a Number`,
         HttpStatus.BAD_REQUEST,
       );
-    return this.booksService.findOne(+id);
+    return this.bookService.findOne(+id);
   }
 
   @Patch(':id')
@@ -79,7 +79,7 @@ export class BooksController {
         `id - '${id}' is Not a Number`,
         HttpStatus.BAD_REQUEST,
       );
-    return this.booksService.update(+id, updateBookDto);
+    return this.bookService.update(+id, updateBookDto);
   }
 
   @Delete(':id')
@@ -91,6 +91,6 @@ export class BooksController {
         `id - '${id}' is Not a Number`,
         HttpStatus.BAD_REQUEST,
       );
-    return this.booksService.remove(+id);
+    return this.bookService.remove(+id);
   }
 }

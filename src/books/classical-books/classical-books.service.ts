@@ -4,17 +4,17 @@ import {
   HttpStatus,
   Injectable,
 } from '@nestjs/common';
-import { CreateBookDto } from './dto/create-book.dto';
-import { CreateBookBulk } from './dto/create-book-bulk.dto';
-import { UpdateBookDto } from './dto/update-book.dto';
+import { CreateBookDto } from '../dto/create-book.dto';
+import { CreateBookBulk } from '../dto/create-book-bulk.dto';
+import { UpdateBookDto } from '../dto/update-book.dto';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
-import Book from './entities/book.entity';
-import Author from '../authors/entities/author.entity';
-import Publisher from '../publishers/entities/publisher.entity';
+import Book from '../entities/book.entity';
+import Author from '../../authors/entities/author.entity';
+import Publisher from '../../publishers/entities/publisher.entity';
 
 @Injectable()
-export class BooksService {
+export class ClassicalBooksService {
   constructor(
     @InjectRepository(Book)
     private booksRepository: Repository<Book>,
