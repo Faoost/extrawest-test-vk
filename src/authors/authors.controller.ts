@@ -11,7 +11,7 @@ import {
   AuthorsFindAllDecorator,
   AuthorsFindOneDecorator,
 } from './authors.controller.decorator';
-import { AuthorsService } from './authors.service';
+import { AuthorService } from './author.service';
 import { JWTAuthGuard } from 'src/guards/jwt-auth.guard';
 import Author from './entities/author.entity';
 
@@ -20,13 +20,13 @@ import Author from './entities/author.entity';
 @Controller('authors')
 @ApiExtraModels(Author)
 export class AuthorsController {
-  constructor(private readonly authorsService: AuthorsService) {}
+  constructor(private readonly authorService: AuthorService) {}
 
   @Get()
   @AuthorsFindAllDecorator()
   @UseGuards(JWTAuthGuard)
   findAll() {
-    return this.authorsService.findAll();
+    return this.authorService.findAll();
   }
 
   @Get(':id')
@@ -38,6 +38,6 @@ export class AuthorsController {
         `id - '${id}' is Not a Number`,
         HttpStatus.BAD_REQUEST,
       );
-    return this.authorsService.findOne(+id);
+    return this.authorService.findOne(+id);
   }
 }
