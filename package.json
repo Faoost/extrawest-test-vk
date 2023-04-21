@@ -75,9 +75,15 @@
       "^.+\\.(t|j)s$": "ts-jest"
     },
     "collectCoverageFrom": [
-      "**/*.(t|j)s"
+      "**/*.(t|j)s",
+      "!**/*.{module,controller,decorator,dto,config,schema,subscriber,guard}.ts",
+      "!**/main.ts"
     ],
     "coverageDirectory": "../coverage",
-    "testEnvironment": "node"
+    "testEnvironment": "node",
+    "coveragePathIgnorePatterns": [
+      ".*/.*.(enum|entity).ts",
+      ".*/.*.asset.ts"
+    ]
   }
 }
