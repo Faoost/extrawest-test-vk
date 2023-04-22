@@ -3,7 +3,7 @@
 Test project for Extrawest.
 ## Technology stack: Nest.JS, PostgreSQL(TypeORM), swagger, jest
 
-## Prepearing
+## Preparing
 1. Create you own .env file from example.
 2. You must have your PostgreSQL DB with new empty DB which name matches the one in your DB_DATABASE variable in .env file.
 3. Run migrations with command "npm run typeorm:run-migrations".
@@ -59,4 +59,4 @@ $ npm run test:cov
 
 ## Swagger
 
-Starthe project, swagger endpoint locally will be http://localhost:3000/api
+Start the project, swagger endpoint locally will be http://localhost:3000/api
